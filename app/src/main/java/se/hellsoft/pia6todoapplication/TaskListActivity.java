@@ -60,8 +60,13 @@ public class TaskListActivity extends AppCompatActivity
         RecyclerView tasksList = (RecyclerView) findViewById(R.id.task_list);
         tasksAdapter = new TasksAdapter();
         tasksList.setAdapter(tasksAdapter);
+    }
 
-        List<Task> tasks = storageHelper.getTasks();
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        List<Task> tasks = TaskStorageHelper.getInstance().getTasks();
         tasksAdapter.setTasks(tasks);
     }
 
@@ -175,7 +180,6 @@ public class TaskListActivity extends AppCompatActivity
                         int position = getAdapterPosition();
                         Task task = tasks.get(position);
                         task.setCompleted(isChecked);
-                        notifyItemChanged(position);
                     }
                 });
             }
